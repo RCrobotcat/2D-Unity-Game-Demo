@@ -32,7 +32,15 @@ public class characterController : MonoBehaviour
     {
         connectBodyCha = hingeJoint2D.connectedBody;
         loadingPosition();
-        currentHealth = maxHealth;
+        if(PlayerPrefs.HasKey("health"))
+        {
+            currentHealth = (int)PlayerPrefs.GetFloat("health");
+            UIHealthBar.instance.setValue(currentHealth / (float)maxHealth);
+        }
+        else
+        {
+            currentHealth = maxHealth;
+        }
 
         playerAnimator = GetComponent<Animator>();
     }
@@ -138,6 +146,7 @@ public class characterController : MonoBehaviour
     {
         PlayerPrefs.SetFloat("PlayerX", transform.position.x);
         PlayerPrefs.SetFloat("PlayerY", transform.position.y);
+        PlayerPrefs.SetFloat("health", health);
         PlayerPrefs.Save(); // Ensure data is saved to disk immediately
     }
 
@@ -145,6 +154,7 @@ public class characterController : MonoBehaviour
     {
         PlayerPrefs.SetFloat("PlayerX", 7.48f);
         PlayerPrefs.SetFloat("PlayerY", -0.21f);
+        PlayerPrefs.SetFloat("health", maxHealth);
         PlayerPrefs.Save();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
