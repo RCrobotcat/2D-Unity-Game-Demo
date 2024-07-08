@@ -3,8 +3,8 @@ using UnityEngine;
 public class HealthSystemForDummies : MonoBehaviour
 {
     public bool IsAlive;
-    public float CurrentHealth = 1000;
-    public float MaximumHealth = 1000;
+    public float CurrentHealth = 5;
+    public float MaximumHealth = 5;
 
     public bool HasAnimationWhenHealthChanges = true;
     public float AnimationDuration = 0.1f;

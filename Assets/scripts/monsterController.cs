@@ -11,18 +11,21 @@ public class monsterController : MonoBehaviour
     int currentHealth;
     public int health { get { return currentHealth; } }
 
-    private HealthBar healthBar; // 添加对 HealthBar 的引用
+    HealthBar healthBar; // 添加对 HealthBar 的引用
+    HealthSystemForDummies healthSystem; // 添加对 HealthSystemForDummies 的引用
+
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         healthBar = GetComponentInChildren<HealthBar>(); // 初始化 HealthBar
-        if (healthBar != null)
+        healthSystem = GetComponent<HealthSystemForDummies>(); // 初始化 HealthSystemForDummies
+        /*if (healthBar != null)
         {
             healthBar.SetMaxHealth(maxHealth); // 设置最大健康值
             healthBar.SetHealth(currentHealth); // 设置当前健康值
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -57,13 +60,18 @@ public class monsterController : MonoBehaviour
     public void ChangeHealth(int amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        if(amount < 0)
+        {
+            healthSystem.AddToCurrentHealth(amount);
+        }
         /*Debug.Log("Monster Health: " + currentHealth + "/" + maxHealth);*/
-        if (healthBar != null)
+        /*if (healthBar != null)
         {
             healthBar.SetHealth(currentHealth); // 更新健康条
-        }
+        }*/
         if (currentHealth <= 0)
         {
+            healthSystem.Kill();
             Destroy(gameObject);
         }
     }

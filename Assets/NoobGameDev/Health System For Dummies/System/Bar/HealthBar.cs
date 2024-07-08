@@ -75,7 +75,7 @@ public class HealthBar : MonoBehaviour
         image.fillAmount = finalValue;
     }
 
-    // 新增方法
+    /*// 新增方法
     public void SetMaxHealth(int maxHealth)
     {
         this.maxHealth = maxHealth; // 设置最大健康值
@@ -86,5 +86,5 @@ public class HealthBar : MonoBehaviour
         // 更新当前健康值
         image.fillAmount = (float)currentHealth / maxHealth;
         text.text = $"{currentHealth}/{maxHealth}";
-    }
+    }*/
 }
