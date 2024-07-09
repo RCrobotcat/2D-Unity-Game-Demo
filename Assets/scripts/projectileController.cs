@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class projectileController : MonoBehaviour
@@ -12,7 +10,7 @@ public class projectileController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
         animator.SetTrigger("fireEnd");
-        if(other.gameObject.tag == "monster")
+        if (other.gameObject.tag == "monster")
         {
             monsterController monster = other.gameObject.GetComponent<monsterController>();
             if (monster != null)

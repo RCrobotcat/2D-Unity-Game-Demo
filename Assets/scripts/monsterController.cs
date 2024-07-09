@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class monsterController : MonoBehaviour
@@ -60,7 +58,7 @@ public class monsterController : MonoBehaviour
     public void ChangeHealth(int amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        if(amount < 0)
+        if (amount < 0)
         {
             healthSystem.AddToCurrentHealth(amount);
         }

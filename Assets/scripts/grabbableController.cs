@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,7 +26,7 @@ public class grabbableController : MonoBehaviour
 
     void loadingPosition()
     {
-        if(PlayerPrefs.HasKey("ItemX") && PlayerPrefs.HasKey("ItemY"))
+        if (PlayerPrefs.HasKey("ItemX") && PlayerPrefs.HasKey("ItemY"))
         {
             float x = PlayerPrefs.GetFloat("ItemX");
             float y = PlayerPrefs.GetFloat("ItemY");

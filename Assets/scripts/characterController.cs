@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class characterController : MonoBehaviour
 {
-    float horizontal; float vertical; Vector2 lookDirection = new Vector2(1, 0); [SerializeField] float grabDistance = 0.3f;
+    float horizontal;
+    float vertical;
+    Vector2 lookDirection = new Vector2(1, 0);
+    [SerializeField] float grabDistance = 0.3f;
     bool isGrabbing = false;
 
     public Rigidbody2D rigidbody2d; // 玩家的刚体
@@ -26,13 +27,15 @@ public class characterController : MonoBehaviour
     Animator playerAnimator;
 
     public GameObject projectilePrefab; // 引用子弹预制体
+    float nextFireTime = 0f; // 下次发射时间
+    public float fireRate = 0.2f; // 发射间隔
 
     // Start is called before the first frame update
     void Start()
     {
         connectBodyCha = hingeJoint2D.connectedBody;
         loadingPosition();
-        if(PlayerPrefs.HasKey("health"))
+        if (PlayerPrefs.HasKey("health"))
         {
             currentHealth = (int)PlayerPrefs.GetFloat("health");
             UIHealthBar.instance.setValue(currentHealth / (float)maxHealth);
@@ -99,11 +102,11 @@ public class characterController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F)) // 按下 F 键时, 发射飞弹
+        if (Input.GetKey(KeyCode.F) && Time.time >= nextFireTime) // 按下 F 键时, 发射飞弹
         {
             Launch();
+            nextFireTime = Time.time + fireRate; // 更新下次发射时间
             /*animator.SetTrigger("Launch");*/
-            
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -117,7 +120,13 @@ public class characterController : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
+        {
+            LaunchByMouse();
+            nextFireTime = Time.time + fireRate; // 更新下次发射时间
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
@@ -187,6 +196,25 @@ public class characterController : MonoBehaviour
         GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
         projectileController projectile = projectileObject.GetComponent<projectileController>();
         projectile.Launch(lookDirection, 300);
+
+        // Ignore collision between projectile and character
+        Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
+        Collider2D characterCollider = GetComponent<Collider2D>();
+        Physics2D.IgnoreCollision(projectileCollider, characterCollider);
+    }
+
+    void LaunchByMouse()
+    {
+        // 记录鼠标位置
+        Vector3 direction = Input.mousePosition;
+
+        // 生成子弹
+        GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+        projectileController projectile = projectileObject.GetComponent<projectileController>();
+
+        // 子弹速度由鼠标点击的位置减去屏幕的宽高的1/2得到
+        // 主要就是坐标的转换
+        projectile.Launch(new Vector2(direction.x - Camera.main.pixelWidth / 2, direction.y - Camera.main.pixelHeight / 2).normalized, 300);
 
         // Ignore collision between projectile and character
         Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
