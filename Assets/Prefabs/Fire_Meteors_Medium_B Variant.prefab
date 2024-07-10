@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fire_Meteors_Medium_B Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2798727997946858921, guid: 28a87fdb75676cc4e9c4424a195f1bc5, type: 3}
+      propertyPath: m_TagString
+      value: fireBall
+      objectReference: {fileID: 0}
     - target: {fileID: 2798727997946858926, guid: 28a87fdb75676cc4e9c4424a195f1bc5, type: 3}
       propertyPath: m_LocalScale.x
       value: 3

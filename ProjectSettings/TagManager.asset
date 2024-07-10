@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Grabbable
   - monster
+  - fireBall
+  - greenFireBall
   layers:
   - Default
   - TransparentFX

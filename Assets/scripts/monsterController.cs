@@ -62,7 +62,7 @@ public class monsterController : MonoBehaviour
         {
             healthSystem.AddToCurrentHealth(amount);
         }
-        Debug.Log("Monster Health: " + currentHealth + "/" + maxHealth);
+        /*Debug.Log("Monster Health: " + currentHealth + "/" + maxHealth);*/
         /*if (healthBar != null)
         {
             healthBar.SetHealth(currentHealth); // ¸üÐÂ½¡¿µÌõ

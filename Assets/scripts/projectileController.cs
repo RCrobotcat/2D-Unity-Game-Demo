@@ -15,7 +15,11 @@ public class projectileController : MonoBehaviour
             monsterController monster = other.gameObject.GetComponent<monsterController>();
             if (monster != null)
             {
-                monster.ChangeHealth(-1);
+               if(gameObject.tag == "fireBall")
+                    monster.ChangeHealth(-1);
+               else if(gameObject.tag == "greenFireBall")
+                    monster.ChangeHealth(-2);
+
                 Animator animator_monster = other.gameObject.GetComponent<Animator>();
                 animator_monster.SetTrigger("isHit");
             }
