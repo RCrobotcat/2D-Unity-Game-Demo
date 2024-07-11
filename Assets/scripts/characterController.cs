@@ -258,6 +258,8 @@ public class characterController : MonoBehaviour
         Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
         Collider2D characterCollider = GetComponent<Collider2D>();
         Physics2D.IgnoreCollision(projectileCollider, characterCollider);
+
+        cinemachineShake.instance.shakingCamera(5f, 0.1f); // 震动相机
     }
 
     void LaunchByMouse()
@@ -277,5 +279,7 @@ public class characterController : MonoBehaviour
         Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
         Collider2D characterCollider = GetComponent<Collider2D>();
         Physics2D.IgnoreCollision(projectileCollider, characterCollider);
+
+        cinemachineShake.instance.shakingCamera(5f, 0.1f); // 震动相机
     }
 }
