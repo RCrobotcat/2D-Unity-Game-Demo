@@ -18,8 +18,6 @@ public class HealthBar : MonoBehaviour
     Text text;
     FollowCameraRotation followCameraRotation;
 
-    private int maxHealth; // 添加 maxHealth 字段
-
     private void Start()
     {
         healthSystem = GetComponentInParent<HealthSystemForDummies>();
@@ -74,17 +72,4 @@ public class HealthBar : MonoBehaviour
         this.leftoverAmount = 0;
         image.fillAmount = finalValue;
     }
-
-    /*// 新增方法
-    public void SetMaxHealth(int maxHealth)
-    {
-        this.maxHealth = maxHealth; // 设置最大健康值
-    }
-
-    public void SetHealth(int currentHealth)
-    {
-        // 更新当前健康值
-        image.fillAmount = (float)currentHealth / maxHealth;
-        text.text = $"{currentHealth}/{maxHealth}";
-    }*/
 }

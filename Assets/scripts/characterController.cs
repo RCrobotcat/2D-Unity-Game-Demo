@@ -24,7 +24,7 @@ public class characterController : MonoBehaviour
 
     bool isInvincible;
     float invincibleTimer;
-    public float timeInvincible = 0.5f; // time of invincible is 0.5 seconds
+    public float timeInvincible = 1f; // time of invincible is 0.5 seconds
 
     Animator playerAnimator;
 
@@ -35,22 +35,35 @@ public class characterController : MonoBehaviour
     GameObject projectilePrefab_currentUse; // 当前使用的子弹的预制体
 
     float nextFireTime = 0f; // 下次发射时间
-    public float fireRate = 0.2f; // 发射间隔
+    public float fireRate = 0.5f; // 发射间隔
 
     public GameObject text_canvas; // 显示当前使用的子弹的画布
     public TextMeshProUGUI projectile_text; // 显示当前使用的子弹
     float displayTime = 1f;
     float timerDisplay;
 
+    HealthBar healthBar; // 添加对 HealthBar 的引用
+    HealthSystemForDummies healthSystem; // 添加对 HealthSystemForDummies 的引用
+
+    // awake 方法在 Start 方法之前调用
+    private void Awake()
+    {
+        healthBar = GetComponentInChildren<HealthBar>(); // 初始化 HealthBar
+        healthSystem = GetComponent<HealthSystemForDummies>(); // 初始化 HealthSystemForDummies
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         connectBodyCha = hingeJoint2D.connectedBody;
+
         loadingPosition();
+
         if (PlayerPrefs.HasKey("health"))
         {
-            currentHealth = (int)PlayerPrefs.GetFloat("health");
-            UIHealthBar.instance.setValue(currentHealth / (float)maxHealth);
+            currentHealth = (int) PlayerPrefs.GetFloat("health");
+            /*UIHealthBar.instance.setValue(currentHealth / (float)maxHealth);*/
+            healthSystem.ReviveWithCustomHealth(currentHealth);
         }
         else
         {
@@ -237,15 +250,18 @@ public class characterController : MonoBehaviour
             invincibleTimer = timeInvincible;
         }
 
+        healthSystem.AddToCurrentHealth(amount);
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+
         /*Debug.Log(currentHealth);*/
 
         if (currentHealth <= 0)
         {
+            healthSystem.Kill();
             ResetGame();
         }
 
-        UIHealthBar.instance.setValue(currentHealth / (float)maxHealth);
+        /*UIHealthBar.instance.setValue(currentHealth / (float)maxHealth);*/
     }
 
     void Launch()
@@ -258,8 +274,6 @@ public class characterController : MonoBehaviour
         Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
         Collider2D characterCollider = GetComponent<Collider2D>();
         Physics2D.IgnoreCollision(projectileCollider, characterCollider);
-
-        cinemachineShake.instance.shakingCamera(5f, 0.1f); // 震动相机
     }
 
     void LaunchByMouse()
@@ -279,7 +293,5 @@ public class characterController : MonoBehaviour
         Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
         Collider2D characterCollider = GetComponent<Collider2D>();
         Physics2D.IgnoreCollision(projectileCollider, characterCollider);
-
-        cinemachineShake.instance.shakingCamera(5f, 0.1f); // 震动相机
     }
 }

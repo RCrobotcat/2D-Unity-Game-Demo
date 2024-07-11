@@ -19,11 +19,6 @@ public class monsterController : MonoBehaviour
         currentHealth = maxHealth;
         healthBar = GetComponentInChildren<HealthBar>(); // 初始化 HealthBar
         healthSystem = GetComponent<HealthSystemForDummies>(); // 初始化 HealthSystemForDummies
-        /*if (healthBar != null)
-        {
-            healthBar.SetMaxHealth(maxHealth); // 设置最大健康值
-            healthBar.SetHealth(currentHealth); // 设置当前健康值
-        }*/
     }
 
     // Update is called once per frame

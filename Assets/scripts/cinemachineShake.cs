@@ -29,16 +29,17 @@ public class cinemachineShake : MonoBehaviour
                 CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin;
                 cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-                cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f; // 确保震动强度被重置为0
+                /*cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f; // 确保震动强度被重置为0*/
+                cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = Mathf.Lerp(startingIntensity, 0f, 1 - (shakeTimer / shakeTimerTotal));
             }
-            else
+            /*else
             {
                 CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin;
                 cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = Mathf.Lerp(startingIntensity, 0f, 1 - (shakeTimer / shakeTimerTotal));
                 // 震动强度, Lerp 插值函数用来平滑地改变值
-            }
+            }*/
         }
     }
 

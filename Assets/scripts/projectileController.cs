@@ -10,6 +10,9 @@ public class projectileController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
         animator.SetTrigger("fireEnd");
+
+        cinemachineShake.instance.shakingCamera(5.0f, 0.1f); // Õð¶¯Ïà»ú
+
         if (other.gameObject.tag == "monster")
         {
             monsterController monster = other.gameObject.GetComponent<monsterController>();
