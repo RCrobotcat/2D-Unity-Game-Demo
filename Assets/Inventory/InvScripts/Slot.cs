@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Slot : MonoBehaviour
 {
     /*public item slotItem;*/
+    public int slotID; // The ID of the slot
+
     public Image slotImage;
     public Text slotNum;
     public string slotInfo;

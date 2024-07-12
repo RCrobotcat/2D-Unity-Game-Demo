@@ -63,6 +63,7 @@ public class InventoryManager : MonoBehaviour
             instance.slots.Add(Instantiate(instance.emptySlot));
 
             instance.slots[i].transform.SetParent(instance.slotGrid.transform);
+            instance.slots[i].GetComponent<Slot>().slotID = i;
             instance.slots[i].GetComponent<Slot>().SetUpSlot(instance.MyInventory.items[i]);
         }
     }
