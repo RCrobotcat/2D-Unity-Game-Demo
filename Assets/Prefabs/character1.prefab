@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 8270499264007779241}
   m_Layer: 0
   m_Name: character1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -397,6 +397,7 @@ MonoBehaviour:
   fireRate: 0.5
   text_canvas: {fileID: 4667568727996238530}
   projectile_text: {fileID: 6267045319011877297}
+  inventory: {fileID: 0}
 --- !u!114 &8270499264007779241
 MonoBehaviour:
   m_ObjectHideFlags: 0

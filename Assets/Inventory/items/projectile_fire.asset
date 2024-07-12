@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd6c8c5c4682e540964878f3dbe409d, type: 3}
+  m_Name: projectile_fire
+  m_EditorClassIdentifier: 
+  itemName: Fire Projectile
+  item_icon: {fileID: -7255122408972777637, guid: 273748a7929d0bc41abf7beba79fe375, type: 3}
+  item_amount: 1
+  item_description: Fire Projectile, causes 1 damage to the monsters.
+  equiptable: 1

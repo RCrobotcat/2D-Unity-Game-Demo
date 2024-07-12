@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd6c8c5c4682e540964878f3dbe409d, type: 3}
+  m_Name: projectile_greenFire
+  m_EditorClassIdentifier: 
+  itemName: Green Fire Projectile
+  item_icon: {fileID: -946000942377729262, guid: 284e94ec97dfd604ba0cc871504d5876, type: 3}
+  item_amount: 1
+  item_description: Green Fire Projectile, causes 2 damages to the monsters.
+  equiptable: 1

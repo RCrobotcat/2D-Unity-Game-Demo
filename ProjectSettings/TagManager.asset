@@ -8,6 +8,7 @@ TagManager:
   - monster
   - fireBall
   - greenFireBall
+  - collectableProjectile
   layers:
   - Default
   - TransparentFX

@@ -11,7 +11,12 @@ public class projectileController : MonoBehaviour
     {
         animator.SetTrigger("fireEnd");
 
-        cinemachineShake.instance.shakingCamera(5.0f, 0.1f); // 震动相机
+        /*cinemachineShake.instance.shakingCamera(5.0f, 0.1f); // 震动相机*/
+
+        if(gameObject.tag == "fireBall")
+            cinemachineShake.instance.shakingCamera(3.9f, 0.1f);
+        else if(gameObject.tag == "greenFireBall")
+            cinemachineShake.instance.shakingCamera(5.0f, 0.1f);
 
         if (other.gameObject.tag == "monster")
         {

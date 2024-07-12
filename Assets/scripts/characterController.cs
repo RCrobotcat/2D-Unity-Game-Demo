@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class characterController : MonoBehaviour
 {
     float horizontal;
     float vertical;
-    Vector2 lookDirection = new Vector2(1, 0);
+    Vector2 lookDirection = new Vector2(1, 0); // 玩家的朝向
     [SerializeField] float grabDistance = 0.3f;
     bool isGrabbing = false;
 
@@ -45,6 +46,9 @@ public class characterController : MonoBehaviour
     HealthBar healthBar; // 添加对 HealthBar 的引用
     HealthSystemForDummies healthSystem; // 添加对 HealthSystemForDummies 的引用
 
+    public GameObject inventory;
+    bool isOpen; // 是否打开背包
+
     // awake 方法在 Start 方法之前调用
     private void Awake()
     {
@@ -61,7 +65,7 @@ public class characterController : MonoBehaviour
 
         if (PlayerPrefs.HasKey("health"))
         {
-            currentHealth = (int) PlayerPrefs.GetFloat("health");
+            currentHealth = (int)PlayerPrefs.GetFloat("health");
             /*UIHealthBar.instance.setValue(currentHealth / (float)maxHealth);*/
             healthSystem.ReviveWithCustomHealth(currentHealth);
         }
@@ -110,6 +114,8 @@ public class characterController : MonoBehaviour
             }
         }
 
+        OpenInventory();
+
         if (Input.GetKeyDown(KeyCode.E)) // 按下 E 键时, 抓取物体
         {
             if (!isGrabbing)
@@ -141,7 +147,6 @@ public class characterController : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha1) && projectilePrefab_currentUse != projectilePrefab_fireBall)
         {
             projectilePrefab_currentUse = projectilePrefab_fireBall;
-            Debug.Log("fireBall");
             timerDisplay = displayTime;
             projectile_text.SetText("using Fire Ball");
             projectile_text.color = new Color(255, 72, 0, 255); // 文本颜色为红色
@@ -150,7 +155,6 @@ public class characterController : MonoBehaviour
         else if (Input.GetKey(KeyCode.Alpha2) && projectilePrefab_currentUse != projectilePrefab_greenFireBall)
         {
             projectilePrefab_currentUse = projectilePrefab_greenFireBall;
-            Debug.Log("greenFireBall");
             timerDisplay = displayTime;
             projectile_text.SetText("using Green Fire Ball");
             projectile_text.color = new Color32(14, 255, 13, 255); // 文本颜色为绿色
@@ -293,5 +297,18 @@ public class characterController : MonoBehaviour
         Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
         Collider2D characterCollider = GetComponent<Collider2D>();
         Physics2D.IgnoreCollision(projectileCollider, characterCollider);
+    }
+
+    void OpenInventory()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            isOpen = !isOpen;
+            inventory.SetActive(isOpen);
+            if (isOpen)
+                Time.timeScale = (0);
+            else
+                Time.timeScale = (1);
+        }
     }
 }
