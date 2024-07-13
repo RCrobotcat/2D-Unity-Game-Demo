@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class characterController : MonoBehaviour
 {
+    public static characterController instance { get; private set; } // Singleton
+
     float horizontal;
     float vertical;
     Vector2 lookDirection = new Vector2(1, 0); // 玩家的朝向
@@ -33,7 +36,7 @@ public class characterController : MonoBehaviour
     public GameObject projectilePrefab_fireBall;
     public GameObject projectilePrefab_greenFireBall;
 
-    GameObject projectilePrefab_currentUse; // 当前使用的子弹的预制体
+    static GameObject projectilePrefab_currentUse; // 当前使用的子弹的预制体
 
     float nextFireTime = 0f; // 下次发射时间
     public float fireRate = 0.5f; // 发射间隔
@@ -47,7 +50,7 @@ public class characterController : MonoBehaviour
     HealthSystemForDummies healthSystem; // 添加对 HealthSystemForDummies 的引用
 
     public GameObject inventory;
-    bool isOpen; // 是否打开背包
+    public bool isOpen; // 是否打开背包
 
     // awake 方法在 Start 方法之前调用
     private void Awake()
@@ -114,6 +117,8 @@ public class characterController : MonoBehaviour
             }
         }
 
+        /*changeProjectileByKeyCode();*/
+
         OpenInventory();
 
         if (Input.GetKeyDown(KeyCode.E)) // 按下 E 键时, 抓取物体
@@ -140,33 +145,6 @@ public class characterController : MonoBehaviour
             {
                 hingeJoint2D.connectedBody = connectBodyCha;
                 isGrabbing = false;
-            }
-        }
-
-        // 切换子弹
-        if (Input.GetKey(KeyCode.Alpha1) && projectilePrefab_currentUse != projectilePrefab_fireBall)
-        {
-            projectilePrefab_currentUse = projectilePrefab_fireBall;
-            timerDisplay = displayTime;
-            projectile_text.SetText("using Fire Ball");
-            projectile_text.color = new Color(255, 72, 0, 255); // 文本颜色为红色
-            text_canvas.SetActive(true);
-        }
-        else if (Input.GetKey(KeyCode.Alpha2) && projectilePrefab_currentUse != projectilePrefab_greenFireBall)
-        {
-            projectilePrefab_currentUse = projectilePrefab_greenFireBall;
-            timerDisplay = displayTime;
-            projectile_text.SetText("using Green Fire Ball");
-            projectile_text.color = new Color32(14, 255, 13, 255); // 文本颜色为绿色
-            text_canvas.SetActive(true);
-        }
-
-        if (timerDisplay >= 0)
-        {
-            timerDisplay -= Time.deltaTime;
-            if (timerDisplay < 0)
-            {
-                text_canvas.SetActive(false);
             }
         }
 
@@ -238,6 +216,7 @@ public class characterController : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerY", -0.21f);
         PlayerPrefs.SetFloat("health", maxHealth);
         PlayerPrefs.SetString("projectile", "fireBall");
+        Time.timeScale = (1);
         PlayerPrefs.Save();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -266,6 +245,36 @@ public class characterController : MonoBehaviour
         }
 
         /*UIHealthBar.instance.setValue(currentHealth / (float)maxHealth);*/
+    }
+
+    void changeProjectileByKeyCode()
+    {
+        // 切换子弹
+        if (Input.GetKey(KeyCode.Alpha1) && projectilePrefab_currentUse != projectilePrefab_fireBall)
+        {
+            projectilePrefab_currentUse = projectilePrefab_fireBall;
+            timerDisplay = displayTime;
+            projectile_text.SetText("using Fire Ball");
+            projectile_text.color = new Color(255, 72, 0, 255); // 文本颜色为红色
+            text_canvas.SetActive(true);
+        }
+        else if (Input.GetKey(KeyCode.Alpha2) && projectilePrefab_currentUse != projectilePrefab_greenFireBall)
+        {
+            projectilePrefab_currentUse = projectilePrefab_greenFireBall;
+            timerDisplay = displayTime;
+            projectile_text.SetText("using Green Fire Ball");
+            projectile_text.color = new Color32(14, 255, 13, 255); // 文本颜色为绿色
+            text_canvas.SetActive(true);
+        }
+
+        if (timerDisplay >= 0)
+        {
+            timerDisplay -= Time.deltaTime;
+            if (timerDisplay < 0)
+            {
+                text_canvas.SetActive(false);
+            }
+        }
     }
 
     void Launch()
@@ -309,6 +318,20 @@ public class characterController : MonoBehaviour
                 Time.timeScale = (0);
             else
                 Time.timeScale = (1);
+        }
+    }
+
+    public void changeProjectileInInventory(string projectileName)
+    {
+        if (projectileName == "Fire Projectile"
+            && projectilePrefab_currentUse != projectilePrefab_fireBall)
+        {
+            projectilePrefab_currentUse = projectilePrefab_fireBall;
+        }
+        else if (projectileName == "Green Fire Projectile"
+            && projectilePrefab_currentUse != projectilePrefab_greenFireBall)
+        {
+            projectilePrefab_currentUse = projectilePrefab_greenFireBall;
         }
     }
 }

@@ -9,11 +9,16 @@ public class InventoryManager : MonoBehaviour
 {
     static InventoryManager instance; // Singleton
 
+    public characterController CharacterController;
+
     public Inventory MyInventory;
     public GameObject slotGrid;
     /*public Slot slotPrefab;*/
     public GameObject emptySlot;
     public Text item_description;
+
+    string item_name;
+    bool item_equitable;
 
     public List<GameObject> slots = new List<GameObject>();
 
@@ -32,9 +37,35 @@ public class InventoryManager : MonoBehaviour
         RefreshItem();
     }
 
-    public static void UpdateItemInfo(string itemDescription)
+    public static void UpdateItemInfo(string itemDescription, string itemName, bool itemEquitable)
     {
         instance.item_description.text = itemDescription;
+
+        instance.item_name = itemName;
+        instance.item_equitable = itemEquitable;
+    }
+
+    public void useItem()
+    {
+        /*Debug.Log("using:" + item_name);*/
+        if (item_equitable)
+        {
+            switch (item_name)
+            {
+                case "Fire Projectile":
+                    CharacterController.changeProjectileInInventory(item_name);
+                    break;
+                case "Green Fire Projectile":
+                    CharacterController.changeProjectileInInventory(item_name);
+                    break;
+                default:
+                    Debug.Log("No item equipped");
+                    break;
+            }
+        }
+
+        Time.timeScale = (1);
+        CharacterController.isOpen = false;
     }
 
     /*public static void CreateNewItem(item item)

@@ -165,10 +165,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotID: 0
+  slotItemName: 
+  selectedItemName: 
+  slotItemEquiptable: 0
+  selectItemEquiptable: 0
   slotImage: {fileID: 8845685414139410941}
   slotNum: {fileID: 4547207807741724212}
   slotInfo: 
   itemInSlot: {fileID: 8237358589087898621}
+  useButton: {fileID: 0}
 --- !u!1 &8237358589087898621
 GameObject:
   m_ObjectHideFlags: 0

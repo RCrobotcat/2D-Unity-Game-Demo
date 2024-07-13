@@ -120,7 +120,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 93940522581117153}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8626652080626595470}
+        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
+        m_MethodName: useItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1963811204824015289}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &717686111410350967
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea36303ee948bf4c9b165c60d086303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterController: {fileID: 0}
   MyInventory: {fileID: 11400000, guid: 1bbfd443bc850fe48bb7ef9248fda6a5, type: 2}
   slotGrid: {fileID: 1442327820722791685}
   emptySlot: {fileID: 5410744661161864554, guid: b23b956682a59054ebccdff2ba57eea7, type: 3}
