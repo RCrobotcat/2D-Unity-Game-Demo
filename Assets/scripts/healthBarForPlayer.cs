@@ -45,7 +45,10 @@ public class HealthBarForPlayer : MonoBehaviour
 
     private void ChangeHealthFill(CurrentHealth currentHealth)
     {
-        if (!healthSystem.HasAnimationWhenHealthChanges) return; // 如果没有动画，直接返回
+        if (!healthSystem.HasAnimationWhenHealthChanges)
+        {
+            return; // 如果没有动画，直接返回
+        }
 
         StopAllCoroutines(); // 停止所有协程
         StartCoroutine(ChangeFillAmount(currentHealth)); // 启动协程

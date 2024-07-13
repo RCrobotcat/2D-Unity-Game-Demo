@@ -41,10 +41,10 @@ public class characterController : MonoBehaviour
     float nextFireTime = 0f; // 下次发射时间
     public float fireRate = 0.5f; // 发射间隔
 
-    public GameObject text_canvas; // 显示当前使用的子弹的画布
+    /*public GameObject text_canvas; // 显示当前使用的子弹的画布
     public TextMeshProUGUI projectile_text; // 显示当前使用的子弹
     float displayTime = 1f;
-    float timerDisplay;
+    float timerDisplay;*/
 
     HealthBar healthBar; // 添加对 HealthBar 的引用
     HealthSystemForDummies healthSystem; // 添加对 HealthSystemForDummies 的引用
@@ -160,19 +160,22 @@ public class characterController : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
 
-        // 按下鼠标左键时, 发射飞弹(飞弹跟随鼠标)
-        if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
+        if (!isOpen)
         {
-            LaunchByMouse();
-            nextFireTime = Time.time + fireRate; // 更新下次发射时间
-        }
+            // 按下鼠标左键时, 发射飞弹(飞弹跟随鼠标)
+            if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
+            {
+                LaunchByMouse();
+                nextFireTime = Time.time + fireRate; // 更新下次发射时间
+            }
 
-        // 按下 F 键时, 发射飞弹
-        if (Input.GetKey(KeyCode.F) && Time.time >= nextFireTime)
-        {
-            Launch();
-            nextFireTime = Time.time + fireRate; // 更新下次发射时间
-            /*animator.SetTrigger("Launch");*/
+            // 按下 F 键时, 发射飞弹
+            if (Input.GetKey(KeyCode.F) && Time.time >= nextFireTime)
+            {
+                Launch();
+                nextFireTime = Time.time + fireRate; // 更新下次发射时间
+                /*animator.SetTrigger("Launch");*/
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -247,7 +250,7 @@ public class characterController : MonoBehaviour
         /*UIHealthBar.instance.setValue(currentHealth / (float)maxHealth);*/
     }
 
-    void changeProjectileByKeyCode()
+    /*void changeProjectileByKeyCode()
     {
         // 切换子弹
         if (Input.GetKey(KeyCode.Alpha1) && projectilePrefab_currentUse != projectilePrefab_fireBall)
@@ -275,7 +278,7 @@ public class characterController : MonoBehaviour
                 text_canvas.SetActive(false);
             }
         }
-    }
+    }*/
 
     void Launch()
     {
