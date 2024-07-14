@@ -14,7 +14,7 @@ public class projectileController : MonoBehaviour
         /*cinemachineShake.instance.shakingCamera(5.0f, 0.1f); // Õð¶¯Ïà»ú*/
 
         if(gameObject.tag == "fireBall")
-            cinemachineShake.instance.shakingCamera(3.9f, 0.1f);
+            cinemachineShake.instance.shakingCamera(3.0f, 0.1f);
         else if(gameObject.tag == "greenFireBall")
             cinemachineShake.instance.shakingCamera(5.0f, 0.1f);
 

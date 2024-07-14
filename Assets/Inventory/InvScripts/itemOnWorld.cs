@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class itemOnWorld : MonoBehaviour
@@ -12,7 +13,23 @@ public class itemOnWorld : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             AddNewItem();
-            Destroy(gameObject);
+
+            if (!thisItem.equiptable)
+            {
+                Destroy(gameObject);
+            }
+            else if (thisItem.equiptable)
+            {
+                if (!thisItem.isPickedUp)
+                {
+                    Destroy(gameObject);
+                    thisItem.isPickedUp = true;
+                }
+                else
+                {
+                    Debug.Log("This projectile have already existed in your inventory.");
+                }
+            }
         }
     }
 
@@ -28,6 +45,10 @@ public class itemOnWorld : MonoBehaviour
                 if (playerInventory.items[i] == null)
                 {
                     playerInventory.items[i] = thisItem;
+
+                    if (!thisItem.equiptable)
+                        thisItem.isPickedUp = true;
+
                     break;
                 }
             }
@@ -35,7 +56,8 @@ public class itemOnWorld : MonoBehaviour
         }
         else
         {
-            thisItem.item_amount += 1;
+            if (!thisItem.equiptable)
+                thisItem.item_amount += 1;
         }
 
         InventoryManager.RefreshItem(); // Refresh the item in the inventory

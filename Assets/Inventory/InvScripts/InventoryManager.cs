@@ -19,8 +19,12 @@ public class InventoryManager : MonoBehaviour
 
     string item_name;
     bool item_equitable;
+    int discardIndex;
 
-    public List<GameObject> slots = new List<GameObject>();
+    public List<GameObject> slots = new List<GameObject>(); // used to store the slots
+
+    public GameObject projectilePrefab_fire;
+    public GameObject projectilePrefab_greenFire;
 
     void Awake()
     {
@@ -45,6 +49,7 @@ public class InventoryManager : MonoBehaviour
         instance.item_equitable = itemEquitable;
     }
 
+    // use the item
     public void useItem()
     {
         /*Debug.Log("using:" + item_name);*/
@@ -64,8 +69,56 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        Time.timeScale = (1);
+        /*Time.timeScale = (1);*/
         CharacterController.isOpen = false;
+    }
+
+    // remove the item from the inventory
+    public void discardItem()
+    {
+        if (MyInventory == null || MyInventory.items == null)
+        {
+            Debug.LogWarning("Inventory or items list is not initialized.");
+            return;
+        }
+
+        int discardIndex = MyInventory.items.FindIndex(item => item != null && item.itemName == item_name); // find the index of the item, neglect the null item
+
+        // if the item will be discarded is the current use projectile, set the current use projectile to null
+        if (MyInventory.items[discardIndex].itemName == "Fire Projectile")
+        {
+            if (characterController.projectilePrefab_currentUse == projectilePrefab_fire)
+            {
+                characterController.projectilePrefab_currentUse = null;
+            }
+        }
+        else if (MyInventory.items[discardIndex].itemName == "Green Fire Projectile")
+        {
+            if (characterController.projectilePrefab_currentUse == projectilePrefab_greenFire)
+            {
+                characterController.projectilePrefab_currentUse = null;
+            }
+        }
+
+        // discard the item
+        if (discardIndex >= 0)
+        {
+            var itemToDiscard = MyInventory.items[discardIndex];
+
+            if (itemToDiscard != null)
+            {
+                itemToDiscard.isPickedUp = false;
+                itemToDiscard.item_amount = 1;
+
+                MyInventory.items[discardIndex] = null;
+
+                RefreshItem();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Item not found in inventory.");
+        }
     }
 
     /*public static void CreateNewItem(item item)
@@ -81,21 +134,27 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < instance.slotGrid.transform.childCount; i++)
         {
-            if (instance.slotGrid.transform.GetChild(i).childCount == 0)
-                break;
             Destroy(instance.slotGrid.transform.GetChild(i).gameObject);
-            instance.slots.Clear();
         }
+
+        instance.slots.Clear();
 
         for (int i = 0; i < instance.MyInventory.items.Count; i++)
         {
-            /*CreateNewItem(instance.MyInventory.items[i]);*/
-
             instance.slots.Add(Instantiate(instance.emptySlot));
 
             instance.slots[i].transform.SetParent(instance.slotGrid.transform);
             instance.slots[i].GetComponent<Slot>().slotID = i;
-            instance.slots[i].GetComponent<Slot>().SetUpSlot(instance.MyInventory.items[i]);
+
+            if (instance.MyInventory.items[i] != null)
+            {
+                instance.slots[i].GetComponent<Slot>().SetUpSlot(instance.MyInventory.items[i]);
+            }
+            else
+            {
+                instance.slots[i].GetComponent<Slot>().ClearSlot(); // for empty slots, clear the slot
+            }
         }
     }
+
 }

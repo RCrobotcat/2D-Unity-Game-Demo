@@ -394,10 +394,12 @@ MonoBehaviour:
   timeInvincible: 0.5
   projectilePrefab_fireBall: {fileID: 8989184834501280974, guid: a9f4e722b45aebb4d8f281f66c20e7b6, type: 3}
   projectilePrefab_greenFireBall: {fileID: 8622624232863436786, guid: 64e7d251bf8a52f47bb093bb02dd78de, type: 3}
+  fire_projectile_item: {fileID: 11400000, guid: 226e45a4c04c1c2448be9023dfb86ae9, type: 2}
+  green_fire_projectile_item: {fileID: 11400000, guid: 934c775ff493d8e4cb9e5173d7972757, type: 2}
   fireRate: 0.5
-  text_canvas: {fileID: 4667568727996238530}
-  projectile_text: {fileID: 6267045319011877297}
   inventory: {fileID: 0}
+  playerInventory: {fileID: 11400000, guid: 1bbfd443bc850fe48bb7ef9248fda6a5, type: 2}
+  isOpen: 0
 --- !u!114 &8270499264007779241
 MonoBehaviour:
   m_ObjectHideFlags: 0

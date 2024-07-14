@@ -18,9 +18,10 @@ public class Slot : MonoBehaviour
     public Text slotNum;
     public string slotInfo;
 
+    public Sprite nullItemSlotImage;
+
     public GameObject itemInSlot; // The item in the slot
 
-    public GameObject useButton;
     bool useButtonActive;
 
     public void ItemOnClicked()
@@ -42,5 +43,16 @@ public class Slot : MonoBehaviour
 
         slotItemName = item.itemName;
         slotItemEquiptable = item.equiptable;
+    }
+
+    public void ClearSlot()
+    {
+        // clear the slot
+        slotImage.sprite = nullItemSlotImage;
+        slotNum.text = "";
+        slotInfo = "";
+
+        slotItemName = "";
+        slotItemEquiptable = false;
     }
 }

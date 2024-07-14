@@ -36,7 +36,10 @@ public class characterController : MonoBehaviour
     public GameObject projectilePrefab_fireBall;
     public GameObject projectilePrefab_greenFireBall;
 
-    static GameObject projectilePrefab_currentUse; // 当前使用的子弹的预制体
+    public static GameObject projectilePrefab_currentUse; // 当前使用的子弹的预制体
+
+    public item fire_projectile_item;
+    public item green_fire_projectile_item;
 
     float nextFireTime = 0f; // 下次发射时间
     public float fireRate = 0.5f; // 发射间隔
@@ -50,6 +53,7 @@ public class characterController : MonoBehaviour
     HealthSystemForDummies healthSystem; // 添加对 HealthSystemForDummies 的引用
 
     public GameObject inventory;
+    public Inventory playerInventory;
     public bool isOpen; // 是否打开背包
 
     // awake 方法在 Start 方法之前调用
@@ -77,14 +81,21 @@ public class characterController : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        // 判断当前使用的子弹
-        if (PlayerPrefs.HasKey("projectile"))
+        if (playerInventory.items.Contains(fire_projectile_item))
         {
-            projectilePrefab_currentUse = PlayerPrefs.GetString("projectile") == "fireBall" ? projectilePrefab_fireBall : projectilePrefab_greenFireBall;
+            // 判断当前使用的子弹
+            if (PlayerPrefs.HasKey("projectile") && playerInventory.items.Contains(green_fire_projectile_item))
+            {
+                projectilePrefab_currentUse = PlayerPrefs.GetString("projectile") == "fireBall" ? projectilePrefab_fireBall : projectilePrefab_greenFireBall;
+            }
+            else
+            {
+                projectilePrefab_currentUse = projectilePrefab_fireBall;
+            }
         }
         else
         {
-            projectilePrefab_currentUse = projectilePrefab_fireBall;
+            projectilePrefab_currentUse = null;
         }
 
         playerAnimator = GetComponent<Animator>();
@@ -282,14 +293,17 @@ public class characterController : MonoBehaviour
 
     void Launch()
     {
-        GameObject projectileObject = Instantiate(projectilePrefab_currentUse, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
-        projectileController projectile = projectileObject.GetComponent<projectileController>();
-        projectile.Launch(lookDirection, 300);
+        if (projectilePrefab_currentUse != null)
+        {
+            GameObject projectileObject = Instantiate(projectilePrefab_currentUse, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+            projectileController projectile = projectileObject.GetComponent<projectileController>();
+            projectile.Launch(lookDirection, 300);
 
-        // Ignore collision between projectile and character
-        Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
-        Collider2D characterCollider = GetComponent<Collider2D>();
-        Physics2D.IgnoreCollision(projectileCollider, characterCollider);
+            // Ignore collision between projectile and character
+            Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
+            Collider2D characterCollider = GetComponent<Collider2D>();
+            Physics2D.IgnoreCollision(projectileCollider, characterCollider);
+        }
     }
 
     void LaunchByMouse()
@@ -297,18 +311,21 @@ public class characterController : MonoBehaviour
         // 记录鼠标位置
         Vector3 direction = Input.mousePosition;
 
-        // 生成子弹
-        GameObject projectileObject = Instantiate(projectilePrefab_currentUse, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
-        projectileController projectile = projectileObject.GetComponent<projectileController>();
+        if (projectilePrefab_currentUse != null)
+        {
+            // 生成子弹
+            GameObject projectileObject = Instantiate(projectilePrefab_currentUse, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+            projectileController projectile = projectileObject.GetComponent<projectileController>();
 
-        // 子弹速度由鼠标点击的位置减去屏幕的宽高的1/2得到
-        // 主要就是坐标的转换
-        projectile.Launch(new Vector2(direction.x - Camera.main.pixelWidth / 2, direction.y - Camera.main.pixelHeight / 2).normalized, 300);
+            // 子弹速度由鼠标点击的位置减去屏幕的宽高的1/2得到
+            // 主要就是坐标的转换
+            projectile.Launch(new Vector2(direction.x - Camera.main.pixelWidth / 2, direction.y - Camera.main.pixelHeight / 2).normalized, 300);
 
-        // Ignore collision between projectile and character
-        Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
-        Collider2D characterCollider = GetComponent<Collider2D>();
-        Physics2D.IgnoreCollision(projectileCollider, characterCollider);
+            // Ignore collision between projectile and character
+            Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
+            Collider2D characterCollider = GetComponent<Collider2D>();
+            Physics2D.IgnoreCollision(projectileCollider, characterCollider);
+        }
     }
 
     void OpenInventory()
@@ -317,10 +334,10 @@ public class characterController : MonoBehaviour
         {
             isOpen = !isOpen;
             inventory.SetActive(isOpen);
-            if (isOpen)
+            /*if (isOpen)
                 Time.timeScale = (0);
             else
-                Time.timeScale = (1);
+                Time.timeScale = (1);*/
         }
     }
 

@@ -13,4 +13,6 @@ public class item : ScriptableObject
     public string item_description;
 
     public bool equiptable; // If the item is equiptables
+
+    public bool isPickedUp; // If the item is picked up
 }

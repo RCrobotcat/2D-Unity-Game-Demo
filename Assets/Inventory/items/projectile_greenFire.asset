@@ -15,5 +15,7 @@ MonoBehaviour:
   itemName: Green Fire Projectile
   item_icon: {fileID: -946000942377729262, guid: 284e94ec97dfd604ba0cc871504d5876, type: 3}
   item_amount: 1
-  item_description: Green Fire Projectile, causes 2 damages to the monsters.
+  item_description: Green Fire Projectile, causes 2 damages to the monsters.(Unlimeted
+    usage)
   equiptable: 1
+  isPickedUp: 0

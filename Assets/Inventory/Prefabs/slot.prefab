@@ -172,8 +172,8 @@ MonoBehaviour:
   slotImage: {fileID: 8845685414139410941}
   slotNum: {fileID: 4547207807741724212}
   slotInfo: 
+  nullItemSlotImage: {fileID: 21300000, guid: 70c500e3f9a702743946d084c36b42c6, type: 3}
   itemInSlot: {fileID: 8237358589087898621}
-  useButton: {fileID: 0}
 --- !u!1 &8237358589087898621
 GameObject:
   m_ObjectHideFlags: 0
