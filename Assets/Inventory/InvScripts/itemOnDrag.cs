@@ -11,6 +11,8 @@ public class itemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public Inventory myInventory;
     int currentItemID; // The ID of the current item
 
+    public Slot slot_current; // The slot that the item is currently in
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         originalParent = transform.parent;
@@ -45,6 +47,8 @@ public class itemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 eventData.pointerCurrentRaycast.gameObject.transform.parent.SetParent(originalParent); // set parent to original parent
 
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+                InventoryManager.RefreshItem();
                 return;
             }
             if (eventData.pointerCurrentRaycast.gameObject.transform.name == "slot(Clone)")
@@ -57,6 +61,8 @@ public class itemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 transform.position = eventData.pointerCurrentRaycast.gameObject.transform.position;
 
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+                InventoryManager.RefreshItem();
                 return;
             }
         }

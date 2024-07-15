@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    static InventoryManager instance; // Singleton
+    public static InventoryManager instance; // Singleton
 
     public characterController CharacterController;
 

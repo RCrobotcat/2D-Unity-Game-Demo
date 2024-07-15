@@ -421,6 +421,8 @@ MonoBehaviour:
   emptySlot: {fileID: 5410744661161864554, guid: b23b956682a59054ebccdff2ba57eea7, type: 3}
   item_description: {fileID: 5186269704818553245}
   slots: []
+  projectilePrefab_fire: {fileID: 8989184834501280974, guid: a9f4e722b45aebb4d8f281f66c20e7b6, type: 3}
+  projectilePrefab_greenFire: {fileID: 8622624232863436786, guid: 64e7d251bf8a52f47bb093bb02dd78de, type: 3}
 --- !u!1 &1442327820722791685
 GameObject:
   m_ObjectHideFlags: 0

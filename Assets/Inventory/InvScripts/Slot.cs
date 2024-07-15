@@ -9,10 +9,7 @@ public class Slot : MonoBehaviour
     public int slotID; // The ID of the slot
 
     public string slotItemName; // The name of the item in the slot
-    public string selectedItemName; // The name of the selected item
-
     public bool slotItemEquiptable; // If the item in the slot is equiptable
-    public bool selectItemEquiptable; // If the selected item is equiptable
 
     public Image slotImage;
     public Text slotNum;
@@ -22,15 +19,32 @@ public class Slot : MonoBehaviour
 
     public GameObject itemInSlot; // The item in the slot
 
-    bool useButtonActive;
+    Image slotBackground;
+
+    // Static variable to keep track of the currently selected slot
+    private static Slot currentlySelectedSlot = null;
 
     public void ItemOnClicked()
     {
         InventoryManager.UpdateItemInfo(slotInfo, slotItemName, slotItemEquiptable);
+
+        // Reset the color of the previously selected slot
+        if (currentlySelectedSlot != null && currentlySelectedSlot != this)
+        {
+            currentlySelectedSlot.slotBackground.color = Color.white;
+        }
+
+        currentlySelectedSlot = this;
+
+        Debug.Log("Slot clicked: " + slotID);
+
+        slotBackground = GetComponent<Image>();
+        slotBackground.color = new Color(0f, 245f, 170f, 255f);
     }
 
     public void SetUpSlot(item item)
     {
+        // if there is no item in the slot, then set the item to inactive
         if (item == null)
         {
             itemInSlot.SetActive(false);

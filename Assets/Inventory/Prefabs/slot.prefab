@@ -166,14 +166,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotID: 0
   slotItemName: 
-  selectedItemName: 
   slotItemEquiptable: 0
-  selectItemEquiptable: 0
   slotImage: {fileID: 8845685414139410941}
   slotNum: {fileID: 4547207807741724212}
   slotInfo: 
   nullItemSlotImage: {fileID: 21300000, guid: 70c500e3f9a702743946d084c36b42c6, type: 3}
   itemInSlot: {fileID: 8237358589087898621}
+  slotBackground: {fileID: 1239575765594849410}
 --- !u!1 &8237358589087898621
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalParent: {fileID: 0}
   myInventory: {fileID: 11400000, guid: 1bbfd443bc850fe48bb7ef9248fda6a5, type: 2}
+  slot_current: {fileID: 3756350579861593118}
 --- !u!225 &5452682104902617850
 CanvasGroup:
   m_ObjectHideFlags: 0
