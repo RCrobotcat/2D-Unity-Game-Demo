@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,8 @@ public class InventoryManager : MonoBehaviour
 
     string item_name;
     bool item_equitable;
+    int item_amount;
+
     int discardIndex;
 
     public List<GameObject> slots = new List<GameObject>(); // used to store the slots
@@ -41,12 +44,24 @@ public class InventoryManager : MonoBehaviour
         RefreshItem();
     }
 
-    public static void UpdateItemInfo(string itemDescription, string itemName, bool itemEquitable)
+    public static void UpdateItemInfo(string itemDescription, string itemName, bool itemEquitable, int itemAmount)
     {
         instance.item_description.text = itemDescription;
 
         instance.item_name = itemName;
         instance.item_equitable = itemEquitable;
+
+        instance.item_amount = itemAmount;
+    }
+
+    // update the amount of the item
+    public void UpdateItemAmount(string itemName, int newAmount)
+    {
+        item foundItem = MyInventory.items.Find(i => i != null && i.itemName == itemName);
+        if (foundItem != null)
+        {
+            foundItem.item_amount = newAmount;
+        }
     }
 
     // use the item
@@ -66,6 +81,33 @@ public class InventoryManager : MonoBehaviour
                 default:
                     Debug.Log("No item equipped");
                     break;
+            }
+        }
+        else
+        {
+            if (item_amount > 0)
+            {
+                switch (item_name)
+                {
+                    case "health":
+                        if (CharacterController.health < 5)
+                        {
+                            CharacterController.ChangeHealth(1);
+
+                            item_amount--;
+                            UpdateItemAmount(item_name, item_amount);
+                            RefreshItem();
+
+                            if (item_amount <= 0)
+                                discardItem();
+
+                            break;
+                        }
+                        else
+                            break;
+                    default:
+                        break;
+                }
             }
         }
 

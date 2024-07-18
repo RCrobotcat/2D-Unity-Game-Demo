@@ -10,6 +10,7 @@ public class Slot : MonoBehaviour
 
     public string slotItemName; // The name of the item in the slot
     public bool slotItemEquiptable; // If the item in the slot is equiptable
+    public int slotItemAmount; // The amount of the item in the slot
 
     public Image slotImage;
     public Text slotNum;
@@ -26,7 +27,7 @@ public class Slot : MonoBehaviour
 
     public void ItemOnClicked()
     {
-        InventoryManager.UpdateItemInfo(slotInfo, slotItemName, slotItemEquiptable);
+        InventoryManager.UpdateItemInfo(slotInfo, slotItemName, slotItemEquiptable, slotItemAmount);
 
         // Reset the color of the previously selected slot
         if (currentlySelectedSlot != null && currentlySelectedSlot != this)
@@ -36,7 +37,7 @@ public class Slot : MonoBehaviour
 
         currentlySelectedSlot = this;
 
-        Debug.Log("Slot clicked: " + slotID);
+        /*Debug.Log("Slot clicked: " + slotID);*/
 
         slotBackground = GetComponent<Image>();
         slotBackground.color = new Color(0f, 245f, 170f, 255f);
@@ -57,6 +58,8 @@ public class Slot : MonoBehaviour
 
         slotItemName = item.itemName;
         slotItemEquiptable = item.equiptable;
+
+        slotItemAmount = item.item_amount;
     }
 
     public void ClearSlot()

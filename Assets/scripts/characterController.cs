@@ -306,7 +306,7 @@ public class characterController : MonoBehaviour
         }
     }
 
-    void LaunchByMouse()
+    /*void LaunchByMouse()
     {
         // 记录鼠标位置
         Vector3 direction = Input.mousePosition;
@@ -318,10 +318,33 @@ public class characterController : MonoBehaviour
             projectileController projectile = projectileObject.GetComponent<projectileController>();
 
             // 子弹速度由鼠标点击的位置减去屏幕的宽高的1/2得到
-            // 主要就是坐标的转换
             projectile.Launch(new Vector2(direction.x - Camera.main.pixelWidth / 2, direction.y - Camera.main.pixelHeight / 2).normalized, 300);
 
             // Ignore collision between projectile and character
+            Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
+            Collider2D characterCollider = GetComponent<Collider2D>();
+            Physics2D.IgnoreCollision(projectileCollider, characterCollider);
+        }
+    }*/
+
+    void LaunchByMouse()
+    {
+        // 获取鼠标位置并转换为世界坐标
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPosition.z = 0;
+
+        if (projectilePrefab_currentUse != null)
+        {
+            // 生成子弹
+            GameObject projectileObject = Instantiate(projectilePrefab_currentUse, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+            projectileController projectile = projectileObject.GetComponent<projectileController>();
+
+            // 计算子弹发射方向
+            Vector2 launchDirection = (mouseWorldPosition - transform.position).normalized;
+
+            projectile.Launch(launchDirection, 300);
+
+            // 忽略子弹和角色之间的碰撞
             Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
             Collider2D characterCollider = GetComponent<Collider2D>();
             Physics2D.IgnoreCollision(projectileCollider, characterCollider);
