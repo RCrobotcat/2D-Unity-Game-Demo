@@ -1,0 +1,10 @@
+A
+As you can see, this is a very tiny game demo.
+A
+And this is a test of the dialog system.
+B
+Hope it will be presented clearly.
+B
+Learning Unity is a hard stuff, my friend...
+A
+You are not my friend, you are my brother my friend!
